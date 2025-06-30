@@ -2,166 +2,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Котики</title>
+    <title>Банковские карты</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            max-width: 1000px;
+            margin: 0 auto;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .cats-container {
+        .container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .card-form {
+            flex: 1;
+        }
+        .card-preview {
+            flex: 1;
+            display: flex;
             justify-content: center;
+            align-items: center;
         }
-        .cat-card {
-            width: 300px;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: white;
-            transition: transform 0.3s;
+        .form-group {
+            margin-bottom: 15px;
         }
-        .cat-card:hover {
-            transform: translateY(-5px);
-        }
-        .cat-name {
-            font-size: 20px;
-            font-weight: bold;
+        label {
+            display: block;
             margin-bottom: 5px;
-            color: #333;
-        }
-        .cat-age {
-            color: #666;
-            margin-bottom: 10px;
-        }
-        .cat-rate {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
-            background-color: #f0f0f0;
             font-weight: bold;
-            margin-bottom: 10px;
         }
-        .rate-high {
-            background-color: #ffdd59;
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
         }
-        .rate-medium {
-            background-color: #a5d8ff;
+        .expiry-date {
+            display: flex;
+            gap: 10px;
         }
-        .favourite {
-            border: 2px solid #ff6b6b;
+        .expiry-date select {
+            flex: 1;
         }
-        .cat-description {
-            color: #555;
-            line-height: 1.5;
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .card {
+            width: 300px;
+            height: 180px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .card-logo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .bank-logo {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .payment-system {
+            width: 50px;
+            height: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .card-number {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            word-spacing: 10px;
+        }
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+        }
+        .card-holder {
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .card-expiry {
+            font-size: 14px;
+        }
+        .cards-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        .cards-table th, .cards-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .cards-table th {
+            background-color: #f2f2f2;
+        }
+        .cards-table tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
     </style>
 </head>
 <body>
-    <h1>Наши котэ </h1>
-    <div class="cats-container" id="catsContainer"></div>
+    <h1>Добавление банковской карты</h1>
+    
+    <div class="container">
+        <div class="card-form">
+            <form id="creditCardForm">
+                <div class="form-group">
+                    <label for="bankName">Название банка</label>
+                    <input type="text" id="bankName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="paymentSystem">Платежная система</label>
+                    <select id="paymentSystem" required>
+                        <option value="">Выберите систему</option>
+                        <option value="visa">Visa</option>
+                        <option value="mastercard">Mastercard</option>
+                        <option value="mir">Мир</option>
+                        <option value="amex">American
+Express</
+ex">American Express</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cardNumber">Номер карты</label>
+                    <input type="text" id="cardNumber" maxlength="16" pattern="\d{16}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cardHolder">Имя держателя карты</label>
+                    <input type="text" id="cardHolder" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Срок действия</label>
+                    <div class="expiry-date">
+                        <select id="expiryMonth" required>
+                            <option value="">Месяц</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <select id="expiryYear" required>
+                            <option value="">Год</option>
+                            <option value="23">2023</option>
+                            <option value="24">2024</option>
+                            <option value="25">2025</option>
+                            <option value="26">2026</option>
+                            <option value="27">2027</option>
+                            <option value="28">2028</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit">Добавить карту</button>
+            </form>
+        </div>
+        
+        <div class="card-preview">
+            <div class="card" id="cardPreview">
+                <div class="card-logo">
+                    <div class="bank-logo" id="previewBankName">Название банка</div>
+                    <div class="payment-system" id="previewPaymentSystem"></div>
+                </div>
+                <div class="card-number" id="previewCardNumber">•••• •••• •••• ••••</div>
+                <div class="card-details">
+                    <div class="card-holder" id="previewCardHolder">ИМЯ ДЕРЖАТЕЛЯ</div>
+                    <div class="card-expiry" id="previewExpiry">••/••</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Сохраненные карты</h2>
+    <table class="cards-table">
+        <thead>
+            <tr>
+                <th>Банк</th>
+                <th>Платежная система</th>
+                <th>Номер карты</th>
+                <th>Держатель</th>
+                <th>Срок действия</th>
+            </tr>
+        </thead>
+        <tbody id="savedCards">
+            <!-- Сюда будут добавляться карты -->
+        </tbody>
+    </table>
 
     <script>
-        const cats = [
-            {
-                "name": "Лара",
-                "age": 8,
-                "rate": 7,
-                "favourite": false,
-                "description": "Лара – шотландская вислоухая, у нее остеохондродисплазия. Лара спокойная, очень ласковая и контактная. Болезнь не лечится и специального ухода не нужно.",
-                "id": 1
-            },
-            {
-                "name": "Базиль",
-                "age": 2,
-                "rate": 10,
-                "favourite": false,
-                "description": "Внимательный, активный и ласковый. Любит играть, катать мяч, и мурчать на пледе рядом с людьми! Прилично воспитан, приучен к лотку. Вакцинирован, имеет ветеринарный паспорт.",
-                "id": 2
-            },
-            {
-                "name": "Риш",
-                "age": 1,
-                "rate": 10,
-                "favourite": true,
-                "description": "Риш любит лесенки, канаты. Очень активный и дружелюбный кот. Риш полностью здоров, привит, кастрирован. Использует лоточек и очень аккуратен.",
-                "id": 3
-            },
-            {
-                "name": "Элли",
-                "age": 4,
-                "rate": 8,
-                "favourite": false,
-                "description": "Элли обладает мягким и добрым характером. Очень любит всевозможные лакомства и вкусно покушать. Не доверяет людям, потребуется время, чтобы стать ей другом. Приучена к лотку и когтеточке",
-                "id": 4
-            },
-            {
-                "name": "Чарли",
-                "age": 1,
-                "rate": 8,
-                "favourite": false,
-                "description": "Чёрно-белый юный котофилософ очень любит размышлять и быть наедине. Пока что не доверяет людям, не агрессивный. Ладит с другими животными, приучен к лотку и когтеточке",
-                "id": 5
-            },
-            {
-                "name": "Стефани",
-                "age": 6,
-                "rate": 9,
-                "favourite": false,
-                "description": "Прелестная Стефани – трогательная, добродушная и очень-очень общительная девочка как никто другой нуждается в заботе и любви. Приучена к лотку и когтеточке",
-                "id": 6
-            },
-            {
-                "name": "Дуся",
-                "age":
-1,
-                "rate": 9,
-                "favourite": false,
-                "description": "Дусеньке около 1 года с небольшим, здорова, привита, стерилизована. Лоточек и когтеточку знает прекрасно. Очень общительная и нежная, хочет постоянного внимания.",
-                "id": 7
+        // Элементы формы
+        const form = document.getElementById('creditCardForm');
+        const bankNameInput = document.getElementById('bankName');
+        const paymentSystemSelect = document.getElementById('paymentSystem');
+        const cardNumberInput = document.getElementById('cardNumber');
+        const cardHolderInput = document.getElementById('cardHolder');
+        const expiryMonthSelect = document.getElementById('expiryMonth');
+        const expiryYearSelect = document.getElementById('expiryYear');
+        
+        // Элементы предпросмотра
+        const previewBankName = document.getElementById('previewBankName');
+        const previewPaymentSystem = document.getElementById('previewPaymentSystem');
+const previewCardNumber = document.getElementById('previewCardNumber');
+        const previewCardHolder = document.getElementById('previewCardHolder');
+        const previewExpiry = document.getElementById('previewExpiry');
+        
+        // Таблица сохраненных карт
+        const savedCardsTable = document.getElementById('savedCards');
+        
+        // Обновление предпросмотра при вводе данных
+        bankNameInput.addEventListener('input', () => {
+            previewBankName.textContent = bankNameInput.value || 'Название банка';
+        });
+        
+        paymentSystemSelect.addEventListener('change', () => {
+            const system = paymentSystemSelect.value;
+            let bgImage = '';
+            
+            switch(system) {
+                case 'visa': bgImage = 'url(https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png)'; break;
+                case 'mastercard': bgImage = 'url(https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png)'; break;
+                case 'mir': bgImage = 'url(https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Mir_logo.svg/1200px-Mir_logo.svg.png)'; break;
+                case 'amex': bgImage = 'url(https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/American_Express_logo.svg/1200px-American_Express_logo.svg.png)'; break;
+                default: bgImage = '';
             }
-        ];
-
-        function renderCats() {
-            const container = document.getElementById('catsContainer');
-            container.innerHTML = '';
-
-            cats.forEach(cat => {
-                const catCard = document.createElement('div');
-                catCard.className = 'cat-card';
-
-                // Добавляем класс favourite, если кот в избранном
-                if (cat.favourite) {
-                    catCard.classList.add('favourite');
-                }
-
-                // Определяем стиль рейтинга
-                let rateClass = 'cat-rate';
-                if (cat.rate >= 9) {
-                    rateClass += ' rate-high';
-                } else if (cat.rate >= 7) {
-                    rateClass += ' rate-medium';
-                }
-
-                catCard.innerHTML = `
-                    <div class="cat-name">${cat.name}</div>
-                    <div class="cat-age">Возраст: ${cat.age} года/лет</div>
-                    <div class="${rateClass}">Рейтинг: ${cat.rate}/10</div>
-                    <div class="cat-description">${cat.description}</div>
-                `;
-
-                container.appendChild(catCard);
-            });
+            
+            previewPaymentSystem.style.backgroundImage = bgImage;
+        });
+        
+        cardNumberInput.addEventListener('input', () => {
+            let value = cardNumberInput.value.replace(/\s/g, '');
+            if (value.length > 16) value = value.substring(0, 16);
+            
+            // Форматирование с пробелами через каждые 4 цифры
+            let formatted = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) formatted += ' ';
+                formatted += value[i];
+            }
+            
+            // Замена недостающих цифр на •
+            const remaining = 16 - value.length;
+            if (remaining > 0) {
+                formatted += ' ' + '••••'.substring(0, Math.min(4, remaining));
+                if (remaining > 4) formatted += ' ••••'.substring(0, Math.min(8, remaining) - 3);
+                if (remaining > 8) formatted += ' ••••'.substring(0, Math.min(12, remaining) - 7);
+                if (remaining > 12) formatted += ' ••••'.substring(0, remaining - 11);
+            }
+            
+            previewCardNumber.textContent = formatted || '•••• •••• •••• ••••';
+        });
+        
+        cardHolderInput.addEventListener('input', () => {
+            previewCardHolder.textContent = cardHolderInput.value.toUpperCase() || 'ИМЯ ДЕРЖАТЕЛЯ';
+        });
+        
+        expiryMonthSelect.addEventListener('change', updateExpiry);
+        expiryYearSelect.addEventListener('change', updateExpiry);
+        
+        function updateExpiry() {
+            const month = expiryMonthSelect.value || '••';
+            const year = expiryYearSelect.value || '••';
+            previewExpiry.textContent = {month}/{year};
         }
-
-        // Запускаем отрисовку при загрузке страницы
-        window.onload = renderCats;
+        
+        // Обработка отправки формы
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Создаем новую строку в таблице
+            const newRow = document.createElement('tr');
+            
+            newRow.innerHTML = `
+                <td>${bankNameInput.value}</td>
+                <td>${paymentSystemSelect.options[paymentSystemSelect.selectedIndex].text}</td>
+                <td>${formatCardNumber(cardNumberInput.value)}</td>
+                <td>${cardHolderInput.value.toUpperCase()}</td>
+                <td>${expiryMonthSelect.value}/${expiryYearSelect.value}</td>
+            `;
+            
+            savedCardsTable.appendChild(newRow);
+            
+            // Очищаем форму и предпросмотр
+            form.reset();
+            previewBankName.textContent = 'Название банка';
+previewPaymentSystem.style.backgroundImage = '';
+            previewCardNumber.textContent = '•••• •••• •••• ••••';
+            previewCardHolder.textContent = 'ИМЯ ДЕРЖАТЕЛЯ';
+            previewExpiry.textContent = '••/••';
+        });
+        
+        // Форматирование номера карты для таблицы
+        function formatCardNumber(number) {
+            return number.replace(/(\d{4})(?=\d)/g, '$1 ');
+        }
     </script>
 </body>
 </html>
