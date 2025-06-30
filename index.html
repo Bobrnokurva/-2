@@ -1,0 +1,167 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Котики</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .cats-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .cat-card {
+            width: 300px;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            transition: transform 0.3s;
+        }
+        .cat-card:hover {
+            transform: translateY(-5px);
+        }
+        .cat-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .cat-age {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .cat-rate {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background-color: #f0f0f0;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .rate-high {
+            background-color: #ffdd59;
+        }
+        .rate-medium {
+            background-color: #a5d8ff;
+        }
+        .favourite {
+            border: 2px solid #ff6b6b;
+        }
+        .cat-description {
+            color: #555;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Наши котэ </h1>
+    <div class="cats-container" id="catsContainer"></div>
+
+    <script>
+        const cats = [
+            {
+                "name": "Лара",
+                "age": 8,
+                "rate": 7,
+                "favourite": false,
+                "description": "Лара – шотландская вислоухая, у нее остеохондродисплазия. Лара спокойная, очень ласковая и контактная. Болезнь не лечится и специального ухода не нужно.",
+                "id": 1
+            },
+            {
+                "name": "Базиль",
+                "age": 2,
+                "rate": 10,
+                "favourite": false,
+                "description": "Внимательный, активный и ласковый. Любит играть, катать мяч, и мурчать на пледе рядом с людьми! Прилично воспитан, приучен к лотку. Вакцинирован, имеет ветеринарный паспорт.",
+                "id": 2
+            },
+            {
+                "name": "Риш",
+                "age": 1,
+                "rate": 10,
+                "favourite": true,
+                "description": "Риш любит лесенки, канаты. Очень активный и дружелюбный кот. Риш полностью здоров, привит, кастрирован. Использует лоточек и очень аккуратен.",
+                "id": 3
+            },
+            {
+                "name": "Элли",
+                "age": 4,
+                "rate": 8,
+                "favourite": false,
+                "description": "Элли обладает мягким и добрым характером. Очень любит всевозможные лакомства и вкусно покушать. Не доверяет людям, потребуется время, чтобы стать ей другом. Приучена к лотку и когтеточке",
+                "id": 4
+            },
+            {
+                "name": "Чарли",
+                "age": 1,
+                "rate": 8,
+                "favourite": false,
+                "description": "Чёрно-белый юный котофилософ очень любит размышлять и быть наедине. Пока что не доверяет людям, не агрессивный. Ладит с другими животными, приучен к лотку и когтеточке",
+                "id": 5
+            },
+            {
+                "name": "Стефани",
+                "age": 6,
+                "rate": 9,
+                "favourite": false,
+                "description": "Прелестная Стефани – трогательная, добродушная и очень-очень общительная девочка как никто другой нуждается в заботе и любви. Приучена к лотку и когтеточке",
+                "id": 6
+            },
+            {
+                "name": "Дуся",
+                "age":
+1,
+                "rate": 9,
+                "favourite": false,
+                "description": "Дусеньке около 1 года с небольшим, здорова, привита, стерилизована. Лоточек и когтеточку знает прекрасно. Очень общительная и нежная, хочет постоянного внимания.",
+                "id": 7
+            }
+        ];
+
+        function renderCats() {
+            const container = document.getElementById('catsContainer');
+            container.innerHTML = '';
+
+            cats.forEach(cat => {
+                const catCard = document.createElement('div');
+                catCard.className = 'cat-card';
+
+                // Добавляем класс favourite, если кот в избранном
+                if (cat.favourite) {
+                    catCard.classList.add('favourite');
+                }
+
+                // Определяем стиль рейтинга
+                let rateClass = 'cat-rate';
+                if (cat.rate >= 9) {
+                    rateClass += ' rate-high';
+                } else if (cat.rate >= 7) {
+                    rateClass += ' rate-medium';
+                }
+
+                catCard.innerHTML = `
+                    <div class="cat-name">${cat.name}</div>
+                    <div class="cat-age">Возраст: ${cat.age} года/лет</div>
+                    <div class="${rateClass}">Рейтинг: ${cat.rate}/10</div>
+                    <div class="cat-description">${cat.description}</div>
+                `;
+
+                container.appendChild(catCard);
+            });
+        }
+
+        // Запускаем отрисовку при загрузке страницы
+        window.onload = renderCats;
+    </script>
+</body>
+</html>
